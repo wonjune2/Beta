@@ -1,0 +1,5 @@
+include: package:flutter_lints/flutter.yaml
+linter:
+  rules:
+    prefer_const_constructors: true        # 생성자에 const 선호
+    prefer_const_literals_to_create_immutables: true # 리스트 등에 const 선호
