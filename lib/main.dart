@@ -4,16 +4,18 @@ import 'package:beta/views/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MainApp());
+  // 1. 앱 시작 전, 필요한 객체들을 미리 생성합니다. (싱글톤처럼 동작)
+  final quoteRepository = QuoteRepository();
+  final quoteViewModel = QuoteViewModel(repository: quoteRepository);
+
+  // 2. 생성된 ViewModel을 앱에 주입합니다.
+  runApp(QuoteApp(viewModel: quoteViewModel));
 }
 
 class QuoteApp extends StatelessWidget {
-  // Repository 생성
-  final quoteRepository = QuoteRepository();
-  // ViewModel 생성 (Repo 주입)
-  final quoteViewModel = QuoteViewModel(repository: quoteRepository);
+  final QuoteViewModel viewModel;
 
-  QuoteApp({super.key});
+  const QuoteApp({super.key, required this.viewModel});
 
   @override
   Widget build(BuildContext context) {

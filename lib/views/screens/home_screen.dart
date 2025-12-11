@@ -14,6 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    widget.viewModel.loadQuote();
   }
 
   @override
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           floatingActionButton: FloatingActionButton.extended(
             onPressed: widget.viewModel.isLoading ? null : () => widget.viewModel.loadQuote(),
-            label: const Text('명언 생성'),
+            label: const Text('생성'),
             icon: const Icon(Icons.auto_awesome),
           ),
         );

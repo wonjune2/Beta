@@ -18,7 +18,7 @@ class QuoteViewModel extends ChangeNotifier {
 
   Future<void> loadQuote() async {
     _isLoading = true;
-    notifyListeners();
+    notifyListeners(); // View에게 "로딩 시작했다"고 알림
 
     try {
       _quote = await _repository.fetchQuote();
@@ -26,7 +26,7 @@ class QuoteViewModel extends ChangeNotifier {
       print('에러 발생: $e');
     } finally {
       _isLoading = false;
-      notifyListeners();
+      notifyListeners(); // View에게 "로딩 끝났고 데이터 바뀌었다"고 알림
     }
   }
 }
