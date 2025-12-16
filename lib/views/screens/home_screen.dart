@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListenableBuilder(
       listenable: widget.viewModel,
       builder: (context, child) {
+        print(widget.viewModel.quote!.content);
         return Scaffold(
           appBar: AppBar(title: const Text('Beta'), centerTitle: true),
           body: Center(

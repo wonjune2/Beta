@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:beta/models/quote_model.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class QuoteRepository {
   // 주의: 실제 배포 시 API 키는 .env 파일 등으로 안전하게 관리해야 합니다.
   // 깃허브에 올릴 때는 꼭 지우고 올리세요!.
-  static const String _apiKey = 'YOUR_API_KEY_HERE';
+  static const String _apiKey = '';
 
   late final GenerativeModel _model;
 
@@ -18,12 +20,29 @@ class QuoteRepository {
   }
 
   Future<QuoteModel> fetchQuote() async {
-    // 네트워크 딜레이 흉내 (1초)
-    await Future.delayed(const Duration(seconds: 1));
+    try {
+      final userPrompt = Content.text('사소한 일에 일희일비하지않고 싶어');
 
-    return const QuoteModel(
-      content: "성공은 최종적인 것이 아니며, 실패는 치명적인 것이 아니다.\n중요한 것은 계속하고자 하는 용기다.",
-      author: "Winston Churchill",
-    );
+      final response = await _model.generateContent([userPrompt]);
+
+      if (response.text == null) {
+        throw Exception('Gemini가 빈 응답을 보냈습니다.');
+      }
+
+      final dynamic decoded = jsonDecode(response.text!);
+      Map<String, dynamic> jsonMap;
+
+      if (decoded is List) {
+        if (decoded.isEmpty) throw Exception('빈 데이터입니다.');
+        jsonMap = decoded.first as Map<String, dynamic>;
+      } else {
+        jsonMap = decoded as Map<String, dynamic>;
+      }
+
+      return QuoteModel.fromJson(jsonMap);
+    } catch (e) {
+      print('Gemini API Error: $e');
+      throw Exception('명언을 가져오는데 실패했습니다.');
+    }
   }
 }
