@@ -18,7 +18,7 @@ class QuoteCard extends StatelessWidget {
             const Icon(Icons.format_quote, size: 48, color: Colors.amber),
             const SizedBox(height: 16),
             Text(
-              quote.content,
+              quote.mentorQuote,
               textAlign: TextAlign.center,
               style: Theme.of(
                 context,
@@ -26,7 +26,7 @@ class QuoteCard extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              '- ${quote.author} -',
+              '- ${quote.personInfo} -',
               style: Theme.of(
                 context,
               ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600], fontStyle: FontStyle.italic),
